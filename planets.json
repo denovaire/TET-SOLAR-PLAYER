@@ -1,0 +1,109 @@
+{
+  "Name": "proxy",
+  "Items": [
+    {
+      "Name": "merkur I",
+      "Code": "sym7spread37"
+    },
+    {
+      "Name": "merkur II",
+      "Code": "sym7spread27"
+    },
+    {
+      "Name": "merkur III",
+      "Code": "pairs6spread37int8"
+    },
+    {
+      "Name": "venus I",
+      "Code": "rand7spread17"
+    },
+    {
+      "Name": "venus II",
+      "Code": "12, 15"
+    },
+    {
+      "Name": "venus III",
+      "Code": "rand7spread17"
+    },
+    {
+      "Name": "erde I",
+      "Code": "pairs6s37int8"
+    },
+    {
+      "Name": "erde II",
+      "Code": "pairs6s50int8"
+    },
+    {
+      "Name": "erde III",
+      "Code": "pairs8s50int16"
+    },
+    {
+      "Name": "mars I",
+      "Code": "rand7s31"
+    },
+    {
+      "Name": "mars II",
+      "Code": "rand7s5c77"
+    },
+    {
+      "Name": "mars III",
+      "Code": "rand14s5c177"
+    },
+    {
+      "Name": "jupiter I",
+      "Code": "pairs16s25int3"
+    },
+    {
+      "Name": "jupiter II",
+      "Code": "pairs16s20int3c103"
+    },
+    {
+      "Name": "jupiter III",
+      "Code": "pairs16s30int12"
+    },
+    {
+      "Name": "saturn I",
+      "Code": "sym7s3c106"
+    },
+    {
+      "Name": "saturn II",
+      "Code": "sym7s3c120"
+    },
+    {
+      "Name": "saturn III",
+      "Code": "sym7s3c134"
+    },
+    {
+      "Name": "uranus I",
+      "Code": "2 30"
+    },
+    {
+      "Name": "uranus II",
+      "Code": "rand7s5"
+    },
+    {
+      "Name": "uranus III",
+      "Code": "rand2s33c50"
+    },
+    {
+      "Name": "uranus IV",
+      "Code": "rand7s5"
+    },
+    {
+      "Name": "neptun I",
+      "Code": "rand2s1c18"
+    },
+    {
+      "Name": "neptun II",
+      "Code": "rand16s1c18"
+    },
+    {
+      "Name": "pluto I",
+      "Code": "rand16"
+    },
+    {
+      "Name": "pluto II",
+      "Code": "rand16"
+    }
+  ]
+}

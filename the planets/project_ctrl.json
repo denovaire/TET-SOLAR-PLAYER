@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "project": "project",
+  "tempoBpm": 60,
+  "created": "2025-09-25T13:45:46.1809757Z",
+  "events": [
+    {
+      "t": 4026,
+      "type": "slot"
+    },
+    {
+      "t": 4283,
+      "type": "slot"
+    },
+    {
+      "t": 4900,
+      "type": "slot"
+    },
+    {
+      "t": 5179,
+      "type": "slot"
+    },
+    {
+      "t": 5739,
+      "type": "slot"
+    },
+    {
+      "t": 6044,
+      "type": "slot"
+    },
+    {
+      "t": 6876,
+      "type": "slot"
+    },
+    {
+      "t": 7180,
+      "type": "slot"
+    }
+  ]
+}
