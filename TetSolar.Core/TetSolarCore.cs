@@ -27,33 +27,40 @@ namespace TetSolar.Core
     {
         // längere Alternativen zuerst, dann Kurzformen!
         // \b = Wortgrenzen; Args optional in (...) direkt mit einsammeln
-        private static readonly Regex CmdRegex = new Regex(
-            @"(?ix)                              # i: ignore case, x: verbose
-              \b(?<cmd>rand|sym|pairs|spread|center|r|p|s|c)\b
-              \s*(?<args>\([^)]*\))?             # optional: (…)
-            ",
-            RegexOptions.Compiled);
+        public enum ShortcodeToken { Random, Spread, Center, Symmetry, Pairs }
 
-        public static IEnumerable<(ShortcodeToken token, string args, int index)> Tokenize(string src)
+        private static readonly Regex CmdNumRegex = new Regex(
+      @"(?ix)                 # i=ignore case, x=whitespace/comments
+      (?<cmd>               # Befehl:
+         sym
+       | pairs
+       | rand               # <-- WICHTIG: rand vorhanden, vor s/c
+       | s
+       | c
+      )
+      (?<num>\d+)           # direkt folgende Zahl
+    ",
+      RegexOptions.Compiled);
+
+        public static IEnumerable<(ShortcodeToken tok, string args)> Tokenize(string src)
         {
-            foreach (Match m in CmdRegex.Matches(src))
+            foreach (Match m in CmdNumRegex.Matches(src))
             {
-                var cmd = m.Groups["cmd"].Value.ToLowerInvariant();
-                var args = m.Groups["args"].Success ? m.Groups["args"].Value : string.Empty;
+                var cmd = m.Groups["cmd"].Value.ToLowerInvariant();     // rand | sym | pairs | s | c
+                var num = m.Groups["num"].Value;                        // die direkt folgende Zahl
 
-                yield return (Map(cmd), args, m.Index);
+                yield return (cmd switch
+                {
+                    "rand" => ShortcodeToken.Random,
+                    "s" => ShortcodeToken.Spread,
+                    "c" => ShortcodeToken.Center,
+                    "sym" => ShortcodeToken.Symmetry,
+                    "pairs" => ShortcodeToken.Pairs,
+                    _ => throw new ArgumentOutOfRangeException(nameof(cmd), $"Unknown shortcode: {cmd}")
+                },
+                num); // <- hier geben wir die erkannte Zahl als args zurück
             }
         }
-
-        private static ShortcodeToken Map(string cmd) => cmd switch
-        {
-            "rand" or "r" => ShortcodeToken.Random,
-            "spread" or "s" => ShortcodeToken.Spread,
-            "center" or "c" => ShortcodeToken.Center,
-            "sym" => ShortcodeToken.Symmetry,
-            "pairs" or "p" => ShortcodeToken.Pairs,
-            _ => throw new ArgumentOutOfRangeException(nameof(cmd), $"Unknown shortcode: {cmd}")
-        };
     }
     public static class TetSolarCore
     {
