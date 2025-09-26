@@ -4,12 +4,57 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+
+
 namespace TetSolar.Core
 {
     /// <summary>
     /// Pure engine for chord generation & pitch conversion in 31-EDO.
     /// Independent of MIDI or console I/O.
     /// </summary>
+    /// 
+
+    public enum ShortcodeToken
+    {
+        Random,     // rand / r
+        Spread,     // spread / s
+        Center,     // center / c
+        Symmetry,   // sym
+        Pairs       // pairs / p (falls gewünscht)
+    }
+
+    public static class ShortcodeLexer
+    {
+        // längere Alternativen zuerst, dann Kurzformen!
+        // \b = Wortgrenzen; Args optional in (...) direkt mit einsammeln
+        private static readonly Regex CmdRegex = new Regex(
+            @"(?ix)                              # i: ignore case, x: verbose
+              \b(?<cmd>rand|sym|pairs|spread|center|r|p|s|c)\b
+              \s*(?<args>\([^)]*\))?             # optional: (…)
+            ",
+            RegexOptions.Compiled);
+
+        public static IEnumerable<(ShortcodeToken token, string args, int index)> Tokenize(string src)
+        {
+            foreach (Match m in CmdRegex.Matches(src))
+            {
+                var cmd = m.Groups["cmd"].Value.ToLowerInvariant();
+                var args = m.Groups["args"].Success ? m.Groups["args"].Value : string.Empty;
+
+                yield return (Map(cmd), args, m.Index);
+            }
+        }
+
+        private static ShortcodeToken Map(string cmd) => cmd switch
+        {
+            "rand" or "r" => ShortcodeToken.Random,
+            "spread" or "s" => ShortcodeToken.Spread,
+            "center" or "c" => ShortcodeToken.Center,
+            "sym" => ShortcodeToken.Symmetry,
+            "pairs" or "p" => ShortcodeToken.Pairs,
+            _ => throw new ArgumentOutOfRangeException(nameof(cmd), $"Unknown shortcode: {cmd}")
+        };
+    }
     public static class TetSolarCore
     {
         // ===== 31-EDO constants =====
